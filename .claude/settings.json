@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/forgot-password)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/register)",
+      "Bash(taskkill /PID 7288 /F)",
+      "Bash(taskkill /PID 36504 /F)",
+      "Bash(taskkill /PID 27612 /F)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill //PID 36504 //F)",
+      "Bash(taskkill //PID 27612 //F)",
+      "Bash(head -35 \"e:/VSCode/HyperZone/src/app/\\(dashboard\\)/dashboard/components/StatCard.tsx\")",
+      "Bash(cat \"e:/VSCode/HyperZone/src/app/\\(dashboard\\)/dashboard/page.tsx\")",
+      "Bash(cat \"e:/VSCode/HyperZone/src/app/\\(dashboard\\)/dashboard/components/StatCard.tsx\")",
+      "Read(//e/VSCode/Logo-icon/shopify-brand-assets/shopify-brand-assets/**)",
+      "Bash(cp \"E:/VSCode/Logo-icon/shopify-brand-assets/shopify-brand-assets/02-glyph/svg/glyph-color.svg\" \"e:/VSCode/HyperZone/public/assets/platforms/shopify.svg\")",
+      "Bash(cp \"E:/VSCode/Logo-icon/shopify-brand-assets/shopify-brand-assets/01-logo/svg/logo-color-white-bg.svg\" \"e:/VSCode/HyperZone/public/assets/platforms/shopify-logo.svg\")"
+    ],
+    "additionalDirectories": [
+      "E:\\VSCode\\Logo-icon\\shopify-brand-assets\\shopify-brand-assets\\02-glyph\\png"
+    ]
+  }
+}
