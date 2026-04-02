@@ -95,10 +95,13 @@ export const menuItems: MenuItem[] = [
     ],
   },
   {
-    path: '/branding',
     label: 'Branding',
     icon: 'branding',
     i18nKey: 'nav.branding',
+    children: [
+      { path: '/branding/packaging', label: 'Packaging Products', i18nKey: 'nav.packagingProducts' },
+      { path: '/branding/connection', label: 'Packaging Connection', i18nKey: 'nav.packagingConnection' },
+    ],
   },
   {
     path: '/affiliate',
