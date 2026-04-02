@@ -350,14 +350,6 @@ export const dashboardService = {
 
     return [
       {
-        title: 'New Orders',
-        value: 23,
-        formattedValue: '23',
-        change: 12.5,
-        trend: 'up',
-        icon: 'shopping-cart',
-      },
-      {
         title: 'Pending Payment',
         value: 8,
         formattedValue: '8',
@@ -366,12 +358,20 @@ export const dashboardService = {
         icon: 'credit-card',
       },
       {
+        title: 'Paid Orders',
+        value: 156,
+        formattedValue: '156',
+        change: 12.5,
+        trend: 'up',
+        icon: 'shopping-cart',
+      },
+      {
         title: 'Available Balance',
         value: 125680.00,
         formattedValue: '$125,680.00',
         change: 8.3,
         trend: 'up',
-        icon: 'wallet',
+        icon: 'dollar-sign',
       },
       {
         title: 'Support Tickets',

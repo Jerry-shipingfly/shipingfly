@@ -105,13 +105,22 @@ export interface ProductSpecification {
 export interface ProductQueryParams {
   page?: number;
   limit?: number;
+  /** Search by SPU, product name, description or tags */
   search?: string;
+  /** Filter by category */
   category?: string;
+  /** Filter by minimum price */
   minPrice?: number;
+  /** Filter by maximum price */
   maxPrice?: number;
+  /** Filter by tags */
   tags?: string[];
+  /** Sort by field */
   sortBy?: 'price' | 'salesCount' | 'rating' | 'createdAt';
+  /** Sort order */
   sortOrder?: 'asc' | 'desc';
+  /** Filter by ship from location */
+  shipFrom?: string;
   /** Filter for recommended products only */
   isRecommended?: boolean;
 }

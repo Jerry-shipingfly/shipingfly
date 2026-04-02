@@ -62,6 +62,15 @@ export const productService = {
       );
     }
 
+    // Ship from filter
+    if (params?.shipFrom) {
+      // Mock implementation: randomly filter products based on ship from
+      // In real implementation, this would filter based on product.shipFrom field
+      filteredProducts = filteredProducts.filter((_, index) =>
+        params.shipFrom === 'China' ? index % 2 === 0 : index % 2 === 1
+      );
+    }
+
     // Recommended filter
     if (params?.isRecommended) {
       filteredProducts = filteredProducts.filter(p =>
@@ -497,6 +506,27 @@ export const productService = {
     }
 
     return request;
+  },
+
+  /**
+   * Search products by image
+   * @param imageFile - Image file to search
+   * @returns Similar products based on image
+   */
+  async searchByImage(imageFile: File): Promise<Product[]> {
+    // TODO: Connect to real API
+    // const formData = new FormData();
+    // formData.append('image', imageFile);
+    // return api.post<Product[]>('/products/search-by-image', formData, {
+    //   headers: { 'Content-Type': 'multipart/form-data' }
+    // });
+
+    // Mock implementation
+    await simulateDelay(1000);
+
+    // Return random products as mock results
+    const shuffled = [...MOCK_PRODUCTS].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 6);
   },
 };
 

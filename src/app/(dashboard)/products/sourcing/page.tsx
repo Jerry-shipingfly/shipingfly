@@ -7,7 +7,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Plus, Search, Clock, Eye, MoreHorizontal } from 'lucide-react';
+import { Plus, Search, Clock, Trash2 } from 'lucide-react';
 import { useSourcingRequests } from '@/hooks/api/useProducts';
 import { PageHeader } from '@/components/common/PageHeader';
 import { Button } from '@/components/ui/Button';
@@ -37,9 +37,29 @@ export default function SourcingPage() {
   // Table column configuration
   const columns: TableColumn<SourcingRequest>[] = [
     {
+      title: 'Image',
+      dataIndex: 'images',
+      width: 80,
+      align: 'center',
+      render: (value) => {
+        const src = (value as string[] | undefined)?.[0];
+        return src ? (
+          <img
+            src={src}
+            alt=""
+            className="w-12 h-12 rounded-lg object-cover border border-gray-200 mx-auto"
+          />
+        ) : (
+          <div className="w-12 h-12 rounded-lg bg-gray-100 border border-gray-200 mx-auto flex items-center justify-center text-xs text-gray-400">
+            No Image
+          </div>
+        );
+      },
+    },
+    {
       title: 'Ticket ID',
       dataIndex: 'id',
-      width: 120,
+      width: 100,
       render: (value) => (
         <span className="font-mono text-sm text-gray-900">{value as string}</span>
       ),
@@ -47,20 +67,22 @@ export default function SourcingPage() {
     {
       title: 'Product Name',
       dataIndex: 'productName',
-      width: 200,
+      width: 180,
     },
     {
       title: 'Description',
       dataIndex: 'description',
-      width: 200,
+      width: 260,
       render: (value) => (
-        <span className="text-sm text-gray-600 line-clamp-2 truncate block max-w-[200px]">{value as string}</span>
+        <span className="text-sm text-gray-600 line-clamp-2 truncate block max-w-[260px]">
+          {value as string}
+        </span>
       ),
     },
     {
       title: 'Target Price',
       dataIndex: 'targetPrice',
-      width: 120,
+      width: 110,
       render: (value) => (
         <span className="whitespace-nowrap">{value ? `$${value}` : '-'}</span>
       ),
@@ -69,46 +91,41 @@ export default function SourcingPage() {
       title: 'Quantity',
       dataIndex: 'quantity',
       width: 80,
-      render: (value) => (
-        value ? (value as number).toLocaleString() : '-'
-      ),
+      align: 'center',
+      render: (value) => (value ? (value as number).toLocaleString() : '-'),
     },
     {
       title: 'Status',
       dataIndex: 'status',
       width: 100,
-      render: (value) => (
-        <StatusBadge status={value as string} colorMap={statusColorMap} />
-      ),
+      align: 'center',
+      render: (value) => <StatusBadge status={value as string} colorMap={statusColorMap} />,
     },
     {
       title: 'Created At',
       dataIndex: 'createdAt',
-      width: 150,
+      width: 110,
       render: (value) => (
         <span className="text-sm text-gray-500">
-          {formatDate(value as string, 'datetime')}
+          {formatDate(value as string, 'short')}
         </span>
       ),
     },
     {
       title: 'Actions',
-      width: 100,
+      width: 80,
+      align: 'center',
       render: (_, record) => (
-        <div className="flex items-center gap-2">
-          <button
-            className="p-1 text-gray-400 hover:text-gray-600"
-            title="View Details"
-          >
-            <Eye className="w-4 h-4" />
-          </button>
-          <button
-            className="p-1 text-gray-400 hover:text-gray-600"
-            title="More"
-          >
-            <MoreHorizontal className="w-4 h-4" />
-          </button>
-        </div>
+        <button
+          className="p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-gray-100 transition-colors"
+          title="Delete"
+          onClick={(e) => {
+            e.stopPropagation();
+            console.log('Delete sourcing request:', record.id);
+          }}
+        >
+          <Trash2 className="w-4 h-4" />
+        </button>
       ),
     },
   ];

@@ -9,7 +9,7 @@ import React, { useState, Suspense, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Plus } from 'lucide-react';
-import { useProducts, useCategories, useAddToCollection, useRemoveFromCollection, useCollectionStatuses } from '@/hooks/api/useProducts';
+import { useProducts, useCategories, useAddToCollection, useRemoveFromCollection, useCollectionStatuses, useSearchByImage } from '@/hooks/api/useProducts';
 import { ProductCard } from '../components/ProductCard';
 import { ProductFilters, FilterOptions } from '../components/ProductFilters';
 import { PageHeader } from '@/components/common/PageHeader';
@@ -32,6 +32,7 @@ function AllProductsContent() {
   const [filters, setFilters] = useState<FilterOptions>({
     search: searchParams.get('search') || '',
     category: searchParams.get('category') || '',
+    shipFrom: searchParams.get('shipFrom') || '',
     sortBy: 'createdAt',
     sortOrder: 'desc',
     tags: [],
@@ -54,12 +55,14 @@ function AllProductsContent() {
     sortOrder: filters.sortOrder,
     minPrice: filters.minPrice,
     maxPrice: filters.maxPrice,
+    shipFrom: filters.shipFrom,
   };
 
   const { products, isLoading, isError, total, totalPages, mutate } = useProducts(queryParams);
   const { categories } = useCategories();
   const { addToCollection, isAdding } = useAddToCollection();
   const { removeFromCollection, isRemoving } = useRemoveFromCollection();
+  const { searchByImage, isSearching } = useSearchByImage();
 
   // Get product IDs for batch collection status check
   const productIds = useMemo(() => products.map(p => String(p.id)), [products]);
@@ -95,6 +98,7 @@ function AllProductsContent() {
     setFilters({
       search: '',
       category: '',
+      shipFrom: '',
       sortBy: 'createdAt',
       sortOrder: 'desc',
       tags: [],
@@ -107,6 +111,17 @@ function AllProductsContent() {
   const handleFiltersChange = (newFilters: FilterOptions) => {
     setFilters(newFilters);
     setPage(1); // Reset page number
+  };
+
+  // Handle image search
+  const handleImageSearch = async (file: File) => {
+    try {
+      await searchByImage(file);
+      toast.success(t('products.imageSearchSuccess') || 'Image search completed!');
+    } catch (error) {
+      console.error('Image search failed:', error);
+      toast.error(t('products.imageSearchFailed') || 'Image search failed');
+    }
   };
 
   // Pagination
@@ -138,6 +153,7 @@ function AllProductsContent() {
         initialValues={filters}
         onChange={handleFiltersChange}
         categories={categories}
+        onImageSearch={handleImageSearch}
       />
 
       {/* Products grid */}

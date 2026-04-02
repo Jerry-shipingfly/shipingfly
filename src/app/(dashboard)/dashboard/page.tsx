@@ -75,8 +75,8 @@ export default function DashboardPage() {
     // Map stat card titles (from dashboardService) to routes with optional query params
     // URL uses simplified status: 'pending' maps to 'pending_payment' internally
     const routeMap: Record<string, { path: string; query?: string }> = {
-      'New Orders': { path: '/orders/store', query: 'status=pending' },
       'Pending Payment': { path: '/orders/store', query: 'status=pending' },
+      'Paid Orders': { path: '/orders/store', query: 'status=paid' },
       'Available Balance': { path: '/wallet' },
       'Support Tickets': { path: '/support-tickets' },
     };

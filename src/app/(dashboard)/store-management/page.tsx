@@ -89,7 +89,7 @@ const PLATFORM_CARDS: PlatformConfig[] = [
       'Auto-sync products',
       'Real-time order sync',
       'Inventory management',
-      'Price updates',
+      'Automated Fulfillment',
     ],
     helpUrl: 'https://help.shopify.com',
   },
@@ -104,8 +104,8 @@ const PLATFORM_CARDS: PlatformConfig[] = [
     features: [
       'Manual order entry',
       'Inventory tracking',
-      'Sales analytics',
-      'Multi-location support',
+      'Real-time Tracking',
+      'Global Warehouse Network',
     ],
   },
 ];
@@ -298,6 +298,7 @@ export default function StoreManagementPage() {
     {
       title: 'Store Name',
       dataIndex: 'name',
+      width: 240,
       render: (value, record) => (
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
@@ -313,7 +314,7 @@ export default function StoreManagementPage() {
     {
       title: 'Platform',
       dataIndex: 'platform',
-      width: 120,
+      width: 130,
       render: (value) => (
         <span className="text-gray-600">
           {PLATFORM_LABELS[String(value)] || String(value)}
@@ -323,13 +324,13 @@ export default function StoreManagementPage() {
     {
       title: 'Status',
       dataIndex: 'status',
-      width: 120,
+      width: 110,
       render: (value) => <StatusBadge status={String(value as string)} />,
     },
     {
       title: 'Last Sync',
       dataIndex: 'lastSyncAt',
-      width: 150,
+      width: 190,
       render: (value) => (
         <span className="text-gray-500">
           {value ? formatDate(String(value), 'datetime') : '-'}
@@ -339,7 +340,7 @@ export default function StoreManagementPage() {
     {
       title: 'Created At',
       dataIndex: 'createdAt',
-      width: 150,
+      width: 140,
       render: (value) => (
         <span className="text-gray-500">
           {formatDate(String(value), 'short')}
@@ -348,7 +349,7 @@ export default function StoreManagementPage() {
     },
     {
       title: 'Actions',
-      width: 120,
+      width: 72,
       align: 'center',
       render: (_, record) => (
         <div className="flex items-center justify-center gap-1">
@@ -543,14 +544,35 @@ export default function StoreManagementPage() {
             columns={columns}
             rowKey="id"
             loading={loading}
-            pagination={{
-              current: page,
-              pageSize,
-              total,
-              onChange: (newPage) => setPage(newPage),
-            }}
+            pagination={
+              total >= 5
+                ? {
+                    current: page,
+                    pageSize,
+                    total,
+                    onChange: (newPage) => setPage(newPage),
+                  }
+                : false
+            }
             emptyText="No store data available"
-            onRowClick={(record) => router.push(`/store-management/${record.id}`)}
+            rowClassName={(record) => {
+              if (record.status === 'connected' && record.url && String(record.url).startsWith('http')) {
+                return 'hover:bg-primary-50/50';
+              }
+              if (record.status === 'error') {
+                return 'hover:bg-red-50/50';
+              }
+              return '';
+            }}
+            onRowClick={(record) => {
+              if (record.status === 'connected' && record.url && String(record.url).startsWith('http')) {
+                window.open(String(record.url), '_blank');
+              } else if (record.status === 'error') {
+                handlePlatformClick(record.platform);
+              } else {
+                router.push(`/store-management/${record.id}`);
+              }
+            }}
             hoverable
           />
         </div>

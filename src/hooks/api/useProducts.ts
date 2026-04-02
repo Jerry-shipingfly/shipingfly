@@ -265,3 +265,23 @@ export function useSourcingRequests() {
     mutate,
   };
 }
+
+/**
+ * Search products by image hook (Mutation)
+ * @returns Trigger function and status
+ */
+export function useSearchByImage() {
+  const { trigger, isMutating, error, data } = useSWRMutation(
+    'search-by-image',
+    async (key: string, { arg }: { arg: File }) => {
+      return productService.searchByImage(arg);
+    }
+  );
+
+  return {
+    searchByImage: trigger,
+    results: data || [],
+    isSearching: isMutating,
+    error: error?.message,
+  };
+}

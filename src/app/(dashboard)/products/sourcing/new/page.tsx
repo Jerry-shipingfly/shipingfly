@@ -144,7 +144,6 @@ export default function NewSourcingPage() {
           { label: 'Sourcing Requests', href: '/products/sourcing' },
           { label: 'New' },
         ]}
-        backHref="/products/sourcing"
         actions={
           <Button
             variant="ghost"

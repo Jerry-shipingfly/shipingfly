@@ -83,7 +83,7 @@ export const TopProducts: React.FC<TopProductsProps> = ({
           // Loading skeleton
           Array.from({ length: 5 }).map((_, index) => (
             <div key={index} className="flex items-center gap-4 px-6 py-4">
-              <div className="w-14 h-14 bg-gray-100 rounded-lg animate-pulse" />
+              <div className="w-12 h-12 bg-gray-100 rounded-lg animate-pulse" />
               <div className="flex-1 min-w-0">
                 <div className="h-4 w-40 bg-gray-100 rounded animate-pulse" />
                 <div className="mt-2 h-3 w-20 bg-gray-100 rounded animate-pulse" />
@@ -117,13 +117,13 @@ export const TopProducts: React.FC<TopProductsProps> = ({
               </div>
 
               {/* Product image */}
-              <div className="w-14 h-14 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
+              <div className="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
                 {product.image ? (
                   <Image
                     src={product.image}
                     alt={product.name}
-                    width={56}
-                    height={56}
+                    width={48}
+                    height={48}
                     className="w-full h-full object-cover"
                   />
                 ) : (

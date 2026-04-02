@@ -202,11 +202,11 @@
       "autoSyncProducts": "Auto-sync products",
       "realTimeOrderSync": "Real-time order sync",
       "inventoryManagement": "Inventory management",
-      "priceUpdates": "Price updates",
+      "priceUpdates": "Automated Fulfillment",
       "manualOrderEntry": "Manual order entry",
       "inventoryTracking": "Inventory tracking",
-      "salesAnalytics": "Sales analytics",
-      "multiLocationSupport": "Multi-location support"
+      "salesAnalytics": "Real-time Tracking",
+      "multiLocationSupport": "Global Warehouse Network"
     },
     "bindModal": {
       "title": "Connect Store",
